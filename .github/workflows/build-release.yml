@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,9 +17,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
 
       - name: Install Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build Block
@@ -40,23 +49,19 @@ jobs:
           cp README.md ${{ steps.get_version.outputs.SLUG }}/
           zip -r ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION }}.zip ${{ steps.get_version.outputs.SLUG }}
 
-      # --- Upload the FOLDER contents as the artifact ---
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          # This name is what the downloaded ZIP will be called
           name: ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION }}
-          # Pointing to the folder (without the .zip extension) prevents double-zipping
           path: ${{ steps.get_version.outputs.SLUG }}/
           retention-days: 7
-          
-      # --- RELEASE STEP: MAY FAIL IF VERSION EXISTS (CONTINUE ON ERROR) ---
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
-        continue-on-error: true # Prevents the whole workflow from showing Red if release fails
+        continue-on-error: true
         with:
           tag_name: v${{ steps.get_version.outputs.VERSION }}
-          files: ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION.zip }}
+          files: ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
