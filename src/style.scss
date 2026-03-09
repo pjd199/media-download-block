@@ -60,3 +60,23 @@
         }
     }
 }
+.mdb-front-header {
+    margin-bottom: 20px;
+    font-size: 24px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.mdb-system-filename {
+    display: block;
+    font-size: 11px;
+    color: #999;
+    font-style: italic;
+    margin-top: 4px;
+}
+
+.mdb-editor-row {
+    border-style: dashed !important;
+    background: #fdfdfd !important;
+    margin-bottom: 10px !important;
+}

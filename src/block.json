@@ -6,14 +6,16 @@
     "title": "Media Download",
     "category": "media",
     "icon": "download",
-    "description": "A clean file download block with custom labels.",
+    "description": "Media Download Block with support for multiple files and custom labels.",
     "attributes": {
-        "mediaID": { "type": "number" },
-        "mediaURL": { "type": "string" },
-        "mediaTitle": { "type": "string" },
-        "mediaSize": { "type": "string" },
-        "fileLabel": { "type": "string", "default": "FILE" },
-        "customName": { "type": "string", "default": "" }
+        "files": {
+            "type": "array",
+            "default": []
+        },
+        "headerText": {
+            "type": "string",
+            "default": "Downloads"
+        }
     },
     "supports": {
         "html": false,

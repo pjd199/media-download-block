@@ -3,62 +3,65 @@ import { Button, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 export default function Edit({ attributes, setAttributes }) {
-    const { mediaID, mediaURL, mediaTitle, mediaSize, fileLabel, customName } = attributes;
+    const { files, headerText } = attributes;
 
-    const onSelectFile = (media) => {
-        const ext = media.url.split('.').pop().toUpperCase();
-        let label = ext.substring(0, 4);
-        
-        // Dynamic icon labeling
-        if (['DOC', 'DOCX', 'ODT'].includes(ext)) label = 'DOC';
-        if (['XLS', 'XLSX', 'ODS'].includes(ext)) label = 'XLS';
-        if (['PPT', 'PPTX'].includes(ext)) label = 'SLIDE';
-        if (media.mime.includes('audio/')) label = 'MP3';
-        if (media.mime.includes('video/')) label = 'MP4';
+    const onSelectFiles = (mediaItems) => {
+        const newFiles = mediaItems.map(media => ({
+            id: media.id,
+            url: media.url,
+            realFileName: media.filename, // The actual filename on the server
+            displayName: media.title,    // The name you want users to see
+            fileSize: media.filesizeHumanReadable,
+            fileLabel: media.url.split('.').pop().toUpperCase().substring(0, 4)
+        }));
+        setAttributes({ files: [...files, ...newFiles] });
+    };
 
-        setAttributes({
-            mediaID: media.id,
-            mediaURL: media.url,
-            mediaTitle: media.title,
-            mediaSize: media.filesizeHumanReadable,
-            fileLabel: label
-        });
+    const updateFileTitle = (newName, index) => {
+        const updatedFiles = [...files];
+        updatedFiles[index].displayName = newName;
+        setAttributes({ files: updatedFiles });
+    };
+
+    const removeFile = (index) => {
+        setAttributes({ files: files.filter((_, i) => i !== index) });
     };
 
     return (
-        <div {...useBlockProps({ className: 'mdb-download-row' })}>
-            {!mediaID ? (
-                <MediaUploadCheck>
-                    <MediaUpload
-                        onSelect={onSelectFile}
-                        render={({ open }) => (
-                            <Button variant="primary" onClick={open}>
-                                {__('Select File', 'mdb')}
-                            </Button>
-                        )}
-                    />
-                </MediaUploadCheck>
-            ) : (
-                <>
-                    <div className="mdb-file-type-icon">{fileLabel}</div>
-                    <div className="mdb-download-details">
-                        <TextControl
-                            label={__('Custom Display Name', 'mdb')}
-                            value={customName}
-                            onChange={(val) => setAttributes({ customName: val })}
-                            placeholder={mediaTitle}
-                        />
-                        <div className="mdb-download-size">{mediaSize}</div>
+        <div {...useBlockProps({ className: 'mdb-editor-container' })}>
+            <TextControl
+                label={__('Block Header', 'mdb')}
+                value={headerText}
+                onChange={(val) => setAttributes({ headerText: val })}
+            />
+
+            <div className="mdb-files-list">
+                {files.map((file, index) => (
+                    <div key={index} className="mdb-download-row mdb-editor-row">
+                        <div className="mdb-file-type-icon">{file.fileLabel}</div>
+                        <div className="mdb-download-details">
+                            <TextControl
+                                value={file.displayName}
+                                onChange={(val) => updateFileTitle(val, index)}
+                                help={`Source: ${file.realFileName} (${file.fileSize})`}
+                            />
+                        </div>
+                        <Button isDestructive onClick={() => removeFile(index)}>×</Button>
                     </div>
-                    <Button 
-                        variant="tertiary" 
-                        isDestructive 
-                        onClick={() => setAttributes({ mediaID: null, mediaURL: null })}
-                    >
-                        {__('Remove', 'mdb')}
-                    </Button>
-                </>
-            )}
+                ))}
+            </div>
+
+            <MediaUploadCheck>
+                <MediaUpload
+                    onSelect={onSelectFiles}
+                    multiple={true}
+                    render={({ open }) => (
+                        <Button variant="secondary" onClick={open}>
+                            {__('Add Files', 'mdb')}
+                        </Button>
+                    )}
+                />
+            </MediaUploadCheck>
         </div>
     );
 }
