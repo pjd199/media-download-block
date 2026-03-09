@@ -61,6 +61,7 @@ export default function Edit({ attributes, setAttributes }) {
                         checked={showDownloadAll}
                         onChange={(val) => setAttributes({ showDownloadAll: val })}
                     />
+                </PanelBody>
             </InspectorControls>
 
             <div {...useBlockProps({ className: `mdb-editor-wrapper mdb-style-${layoutStyle}` })}>
