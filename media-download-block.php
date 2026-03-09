@@ -2,8 +2,10 @@
 /**
  * Plugin Name: Media Download Block
  * Description: A clean file download block for the Gutenberg editor.
- * Version: 1.2.0
- * Author: WPDM
+ * Version: 0.0.1
+ * Author: Pete Dibdin
+ * GitHub Plugin URI: https://github.com/pjd199/media-download-block
+ * License: MIT
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
