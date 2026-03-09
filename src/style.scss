@@ -1,58 +1,74 @@
-.mdb-container, .mdb-editor-wrapper {
-    margin: 2rem 0;
-
+.mdb-container {
     .mdb-download-row {
         display: flex;
         align-items: center;
-        gap: 15px;
-        margin-bottom: 12px;
-
-        @media (max-width: 600px) {
-            flex-direction: column;
-            text-align: center;
-            padding: 20px !important;
-            .mdb-download-button { width: 100%; }
-        }
-    }
-
-    &.mdb-style-row .mdb-download-row {
-        background: #f9f9f9;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 15px;
-    }
-
-    &.mdb-style-compact .mdb-download-row {
+        padding: 12px 0;
         border-bottom: 1px solid #eee;
-        padding: 8px 0;
-        .mdb-file-type-icon { width: 40px; height: 40px; font-size: 10px; }
-    }
+        gap: 15px;
 
-    .mdb-file-type-icon {
-        width: 50px; height: 50px;
-        background: #FFD21E;
-        display: flex; align-items: center; justify-content: center;
-        font-weight: 800; border-radius: 4px; flex-shrink: 0;
-    }
+        &:last-child { border-bottom: none; }
 
-    .mdb-download-details {
-        flex-grow: 1;
-        .mdb-download-title { font-weight: 600; margin: 0; }
-        .mdb-download-size { font-size: 12px; color: #666; }
-    }
+        .mdb-file-icon {
+            color: #007cba;
+            flex-shrink: 0;
+        }
 
-    .mdb-download-button {
-        background: #007cba;
-        color: #fff !important;
-        padding: 10px 20px;
-        text-decoration: none;
-        border-radius: 4px;
-        font-weight: 600;
-        white-space: nowrap;
+        .mdb-download-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            
+            .mdb-download-title {
+                font-weight: 500;
+                color: #1e1e1e;
+                font-size: 15px;
+            }
+
+            .mdb-download-size {
+                font-size: 12px;
+                color: #757575;
+            }
+        }
+
+        .mdb-clean-link {
+            color: #757575;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                color: #007cba;
+            }
+        }
     }
 }
 
-.mdb-editor-controls {
-    display: flex; flex-direction: column;
-    button { height: 22px !important; min-width: 22px !important; padding: 0 !important; }
+.mdb-file-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: #444; // Subtle professional grey
+    flex-shrink: 0;
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.mdb-clean-link {
+    background: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    color: #007cba;
+    transition: background 0.2s ease, transform 0.1s ease;
+
+    &:hover {
+        background: #f0f7ff;
+        color: #005a87;
+        transform: translateY(1px); // Subtle "click" feel
+    }
 }

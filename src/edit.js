@@ -1,6 +1,7 @@
 import { useBlockProps, MediaUpload, MediaUploadCheck, InspectorControls } from '@wordpress/block-editor';
 import { Button, TextControl, PanelBody, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { getFileIcon } from './utils';
 
 export default function Edit({ attributes, setAttributes }) {
     const { files, headerText, layoutStyle } = attributes;
@@ -45,6 +46,17 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(val) => setAttributes({ layoutStyle: val })}
                     />
                 </PanelBody>
+                <SelectControl
+                    label={__('Header Level', 'mdb')}
+                    value={headerLevel}
+                    options={[
+                        { label: 'H1', value: 1 },
+                        { label: 'H2', value: 2 },
+                        { label: 'H3', value: 3 },
+                        { label: 'H4', value: 4 },
+                    ]}
+                    onChange={(val) => setAttributes({ headerLevel: parseInt(val) })}
+                />
             </InspectorControls>
 
             <div {...useBlockProps({ className: `mdb-editor-wrapper mdb-style-${layoutStyle}` })}>
@@ -61,7 +73,9 @@ export default function Edit({ attributes, setAttributes }) {
                                 <Button icon="arrow-up-alt2" onClick={() => moveFile(index, index - 1)} disabled={index === 0} />
                                 <Button icon="arrow-down-alt2" onClick={() => moveFile(index, index + 1)} disabled={index === files.length - 1} />
                             </div>
-                            <div className="mdb-file-type-icon">{file.fileLabel}</div>
+                            <div className="mdb-file-type-icon">
+                                {getFileIcon(file.fileLabel)}
+                            </div>
                             <div className="mdb-download-details">
                                 <TextControl
                                     value={file.displayName}

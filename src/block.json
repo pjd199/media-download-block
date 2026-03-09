@@ -16,6 +16,7 @@
             "type": "string",
             "default": "Downloads"
         },
+        "headerLevel": { "type": "number", "default": 2 },
         "layoutStyle": {
             "type": "string",
             "default": "row"
