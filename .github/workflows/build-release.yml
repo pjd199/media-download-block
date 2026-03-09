@@ -52,7 +52,7 @@ jobs:
           # 3. Copy files into that specific folder
           cp -r build $PLUGIN_SLUG/
           cp media-download-block.php $PLUGIN_SLUG/
-          cp src/render.php $PLUGIN_SLUG/
+          cp render.php $PLUGIN_SLUG/
           cp README.md $PLUGIN_SLUG/
           
           # 4. ZIP the folder (The ZIP name has the version, the FOLDER inside does not)
