@@ -1,5 +1,5 @@
 import { useBlockProps, MediaUpload, MediaUploadCheck, InspectorControls } from '@wordpress/block-editor';
-import { Button, TextControl, PanelBody, SelectControl } from '@wordpress/components';
+import { Button, TextControl, PanelBody, SelectControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { getFileIcon } from './utils';
 
