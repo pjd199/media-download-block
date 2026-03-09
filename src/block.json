@@ -2,11 +2,11 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "mdb/media-download",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "title": "Media Download",
     "category": "media",
     "icon": "download",
-    "description": "Media Download Block with support for multiple files and custom labels.",
+    "description": "Download multiple files with custom labels and layout styles.",
     "attributes": {
         "files": {
             "type": "array",
@@ -15,6 +15,10 @@
         "headerText": {
             "type": "string",
             "default": "Downloads"
+        },
+        "layoutStyle": {
+            "type": "string",
+            "default": "row"
         }
     },
     "supports": {
