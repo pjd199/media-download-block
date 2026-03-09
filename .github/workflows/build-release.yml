@@ -1,16 +1,13 @@
-name: Build and Release Media Download Block
+name: Build and Archive Plugin
 
 on:
-  workflow_dispatch:
-
-permissions:
-  actions: write
-  contents: write
-env:
-  PLUGIN_SLUG: media-download-block
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
-  build_release:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -19,8 +16,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
-          cache: "npm"
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm ci
@@ -31,49 +28,33 @@ jobs:
       - name: Get Plugin Version
         id: get_version
         run: |
-          # Extract version from the PHP header in the root file
-          VERSION=$(grep -m 1 "Version:" ${{ env.PLUGIN_SLUG }}.php | awk '{print $NF}' | tr -d '\r')
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "tag=v$VERSION" >> $GITHUB_OUTPUT
+          VERSION=$(grep -m 1 "Version:" media-download-block.php | awk '{print $NF}')
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "SLUG=media-download-block" >> $GITHUB_OUTPUT
 
-      - name: Validate Release Version
-        id: check_release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Deployment Folder
         run: |
-          if gh release view v${{ env.VERSION }} >/dev/null 2>&1; then
-            echo "::error::Release v${{ env.VERSION }} already exists! Update version in ${{ env.PLUGIN_SLUG }}.php."
-            exit 1
-          fi
+          mkdir ${{ steps.get_version.outputs.SLUG }}
+          cp -r build ${{ steps.get_version.outputs.SLUG }}/
+          cp media-download-block.php ${{ steps.get_version.outputs.SLUG }}/
+          cp README.md ${{ steps.get_version.outputs.SLUG }}/
+          zip -r ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION }}.zip ${{ steps.get_version.outputs.SLUG }}
 
-      - name: Prepare Plugin for Zipping
-        run: |
-          mkdir -p ${{ env.PLUGIN_SLUG }}
-          
-          # Copy only production files
-          cp ${{ env.PLUGIN_SLUG }}.php ${{ env.PLUGIN_SLUG }}/
-          cp -r build/ ${{ env.PLUGIN_SLUG }}/
-          
-          # Include readme/license if they exist
-          if [ -f readme.txt ]; then cp readme.txt ${{ env.PLUGIN_SLUG }}/; fi
-          if [ -f LICENSE ]; then cp LICENSE ${{ env.PLUGIN_SLUG }}/; fi
+      # --- NEW STEP: ALWAYS EXPORT AS ARTIFACT ---
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION }}
+          path: ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION }}.zip
+          retention-days: 7
 
-      - name: Create Zip Archive
-        run: |
-          zip -r ${{ env.PLUGIN_SLUG }}-${{ env.VERSION }}.zip ${{ env.PLUGIN_SLUG }}/
-
+      # --- RELEASE STEP: MAY FAIL IF VERSION EXISTS (CONTINUE ON ERROR) ---
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/heads/main')
+        continue-on-error: true # Prevents the whole workflow from showing Red if release fails
         with:
-          tag_name: v${{ env.VERSION }}
-          name: Release v${{ env.VERSION }}
-          files: ${{ env.PLUGIN_SLUG }}-${{ env.VERSION }}.zip
-          generate_release_notes: true
+          tag_name: v${{ steps.get_version.outputs.VERSION }}
+          files: ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION.zip }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Post-Cleanup
-        if: always()
-        run: |
-          rm -rf ${{ env.PLUGIN_SLUG }}
-          rm -f ${{ env.PLUGIN_SLUG }}-${{ env.VERSION }}.zip
