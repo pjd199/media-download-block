@@ -1,60 +1,62 @@
-/* Front-end and Editor Styles */
 .mdb-download-row {
     display: flex;
     align-items: center;
-    padding: 20px;
-    background: #ffffff;
-    border: 1px solid #e2e2e2;
-    border-radius: 6px;
-    margin: 20px 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    justify-content: space-between; // Pushes button to the right
+    padding: 16px 24px;
+    background: #f9f9f9;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    gap: 20px;
 
     .mdb-file-type-icon {
-        width: 52px;
-        height: 52px;
-        background: #FFD21E; /* Yellow icon from guide */
+        width: 48px;
+        height: 48px;
+        background: #FFD21E; // Golden Yellow
         color: #000;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 900;
-        font-size: 13px;
-        border-radius: 4px;
-        margin-right: 20px;
+        font-weight: 800;
+        font-size: 12px;
+        border-radius: 6px;
         flex-shrink: 0;
         text-transform: uppercase;
     }
 
     .mdb-download-details {
         flex-grow: 1;
+        display: flex;
+        flex-direction: column;
         
         .mdb-download-title {
-            font-weight: 700;
-            font-size: 18px;
-            color: #111;
-            margin-bottom: 2px;
-            line-height: 1.2;
+            font-weight: 600;
+            font-size: 16px;
+            color: #1e1e1e;
+            line-height: 1.4;
         }
 
         .mdb-download-size {
             font-size: 13px;
-            color: #777;
+            color: #666666;
+            margin-top: 2px;
         }
     }
 
     .mdb-download-button {
-        background: #3498DB; /* Blue button from guide */
-        color: #fff !important;
-        padding: 12px 24px;
-        text-decoration: none !important;
+        background: #007cba; // WordPress Blue
+        color: #ffffff !important;
+        padding: 10px 20px;
         border-radius: 4px;
-        font-weight: 700;
-        font-size: 14px;
-        transition: background 0.2s ease;
+        font-weight: 600;
+        font-size: 13px;
+        text-decoration: none !important;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: background 0.2s ease;
 
         &:hover {
-            background: #2980B9;
+            background: #006ba1;
         }
     }
 }
