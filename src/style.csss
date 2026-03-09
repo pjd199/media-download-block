@@ -1,0 +1,53 @@
+.wpdm-download-row {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 6px;
+    margin: 20px 0;
+
+    .wpdm-file-type-icon {
+        width: 52px;
+        height: 52px;
+        background: #FFD21E; // Yellow from your screenshot
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 13px;
+        border-radius: 4px;
+        margin-right: 20px;
+        flex-shrink: 0;
+    }
+
+    .wpdm-download-details {
+        flex-grow: 1;
+        
+        .wpdm-download-title {
+            font-weight: 700;
+            font-size: 18px;
+            color: #111;
+            margin-bottom: 2px;
+        }
+
+        .wpdm-download-size {
+            font-size: 13px;
+            color: #777;
+        }
+    }
+
+    .wpdm-download-button {
+        background: #3498DB; // Blue from your screenshot
+        color: #fff !important;
+        padding: 12px 24px;
+        text-decoration: none !important;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 14px;
+        transition: opacity 0.2s;
+
+        &:hover { opacity: 0.9; }
+    }
+}
