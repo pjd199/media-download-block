@@ -1,5 +1,6 @@
 import { useBlockProps, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { Button, TextControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 
 export default function Edit({ attributes, setAttributes }) {
     const { mediaID, mediaURL, mediaTitle, mediaSize, fileLabel, customName } = attributes;
@@ -8,7 +9,7 @@ export default function Edit({ attributes, setAttributes }) {
         const ext = media.url.split('.').pop().toUpperCase();
         let label = ext.substring(0, 4);
         
-        // Grouping logic for all accepted types
+        // Dynamic icon labeling
         if (['DOC', 'DOCX', 'ODT'].includes(ext)) label = 'DOC';
         if (['XLS', 'XLSX', 'ODS'].includes(ext)) label = 'XLS';
         if (['PPT', 'PPTX'].includes(ext)) label = 'SLIDE';
@@ -25,29 +26,37 @@ export default function Edit({ attributes, setAttributes }) {
     };
 
     return (
-        <div {...useBlockProps({ className: 'wpdm-download-row' })}>
+        <div {...useBlockProps({ className: 'mdb-download-row' })}>
             {!mediaID ? (
                 <MediaUploadCheck>
                     <MediaUpload
                         onSelect={onSelectFile}
                         render={({ open }) => (
-                            <Button isPrimary onClick={open}>Select File from Media Library</Button>
+                            <Button variant="primary" onClick={open}>
+                                {__('Select File', 'mdb')}
+                            </Button>
                         )}
                     />
                 </MediaUploadCheck>
             ) : (
                 <>
-                    <div className="wpdm-file-type-icon">{fileLabel}</div>
-                    <div className="wpdm-download-details">
+                    <div className="mdb-file-type-icon">{fileLabel}</div>
+                    <div className="mdb-download-details">
                         <TextControl
-                            label="Customize Display Name"
+                            label={__('Custom Display Name', 'mdb')}
                             value={customName}
                             onChange={(val) => setAttributes({ customName: val })}
                             placeholder={mediaTitle}
                         />
-                        <div className="wpdm-download-size">{mediaSize}</div>
+                        <div className="mdb-download-size">{mediaSize}</div>
                     </div>
-                    <Button isDestructive onClick={() => setAttributes({ mediaID: null })}>Remove</Button>
+                    <Button 
+                        variant="tertiary" 
+                        isDestructive 
+                        onClick={() => setAttributes({ mediaID: null, mediaURL: null })}
+                    >
+                        {__('Remove', 'mdb')}
+                    </Button>
                 </>
             )}
         </div>

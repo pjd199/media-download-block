@@ -22,7 +22,7 @@ jobs:
           node-version: '24'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build Block
         run: npm run build

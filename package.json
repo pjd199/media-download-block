@@ -1,13 +1,23 @@
 {
   "name": "media-download-block",
   "version": "0.0.1",
-  "description": "Wordpress Media Download Block",
+  "description": "A clean file download block for the Gutenberg editor.",
   "main": "build/index.js",
+  "license": "GPL-2.0-or-later",
   "scripts": {
     "start": "wp-scripts start",
-    "build": "wp-scripts build"
+    "build": "wp-scripts build",
+    "format": "wp-scripts format",
+    "lint:js": "wp-scripts lint-js",
+    "lint:scss": "wp-scripts lint-style",
+    "test": "npm run lint:js && npm run lint:scss",
+    "env": "wp-env",
+    "env:start": "wp-env start",
+    "env:stop": "wp-env stop",
+    "env:clean": "wp-env clean all"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^27.0.0"
+    "@wordpress/env": "^10.8.0",
+    "@wordpress/scripts": "^30.1.0"
   }
 }
