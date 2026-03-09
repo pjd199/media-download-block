@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: write
   contents: write
-
 env:
   PLUGIN_SLUG: media-download-block
 
