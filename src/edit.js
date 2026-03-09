@@ -4,7 +4,13 @@ import { __ } from '@wordpress/i18n';
 import { getFileIcon } from './utils';
 
 export default function Edit({ attributes, setAttributes }) {
-    const { files, headerText, layoutStyle } = attributes;
+    const { 
+        files, 
+        headerText, 
+        headerLevel, 
+        layoutStyle, 
+        showDownloadAll 
+    } = attributes;
 
     const onSelectFiles = (mediaItems) => {
         const newFiles = mediaItems.map(media => ({
