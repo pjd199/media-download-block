@@ -35,7 +35,7 @@ export default function Edit({ attributes, setAttributes }) {
     return (
         <>
             <InspectorControls>
-                <PanelBody title={__('Layout Settings', 'mdb')}>
+                <PanelBody title={__('Display Settings', 'mdb')}>
                     <SelectControl
                         label={__('Display Style', 'mdb')}
                         value={layoutStyle}
@@ -45,18 +45,22 @@ export default function Edit({ attributes, setAttributes }) {
                         ]}
                         onChange={(val) => setAttributes({ layoutStyle: val })}
                     />
-                </PanelBody>
-                <SelectControl
-                    label={__('Header Level', 'mdb')}
-                    value={headerLevel}
-                    options={[
-                        { label: 'H1', value: 1 },
-                        { label: 'H2', value: 2 },
-                        { label: 'H3', value: 3 },
-                        { label: 'H4', value: 4 },
-                    ]}
-                    onChange={(val) => setAttributes({ headerLevel: parseInt(val) })}
-                />
+                    <SelectControl
+                        label={__('Header Level', 'mdb')}
+                        value={headerLevel}
+                        options={[
+                            { label: 'H1', value: 1 },
+                            { label: 'H2', value: 2 },
+                            { label: 'H3', value: 3 },
+                            { label: 'H4', value: 4 },
+                        ]}
+                        onChange={(val) => setAttributes({ headerLevel: parseInt(val) })}
+                    />
+                    <ToggleControl
+                        label={__('Show "Download All" Button', 'mdb')}
+                        checked={showDownloadAll}
+                        onChange={(val) => setAttributes({ showDownloadAll: val })}
+                    />
             </InspectorControls>
 
             <div {...useBlockProps({ className: `mdb-editor-wrapper mdb-style-${layoutStyle}` })}>

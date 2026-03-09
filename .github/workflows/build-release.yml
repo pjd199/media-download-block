@@ -46,6 +46,7 @@ jobs:
           mkdir ${{ steps.get_version.outputs.SLUG }}
           cp -r build ${{ steps.get_version.outputs.SLUG }}/
           cp media-download-block.php ${{ steps.get_version.outputs.SLUG }}/
+          cp src/render.php ${{ steps.get_version.outputs.SLUG }}
           cp README.md ${{ steps.get_version.outputs.SLUG }}/
           zip -r ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION }}.zip ${{ steps.get_version.outputs.SLUG }}
 

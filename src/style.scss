@@ -72,3 +72,20 @@
         transform: translateY(1px); // Subtle "click" feel
     }
 }
+
+.mdb-download-all-btn {
+    display: inline-flex;
+    align-items: center;
+    background: #007cba;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background 0.2s;
+
+    &:hover { background: #006ba1; }
+    &:disabled { background: #ccc; cursor: not-allowed; }
+}

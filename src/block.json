@@ -1,32 +1,19 @@
 {
-    "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "mdb/media-download",
     "version": "1.3.0",
     "title": "Media Download",
     "category": "media",
     "icon": "download",
-    "description": "Download multiple files with custom labels and layout styles.",
     "attributes": {
-        "files": {
-            "type": "array",
-            "default": []
-        },
-        "headerText": {
-            "type": "string",
-            "default": "Downloads"
-        },
+        "files": { "type": "array", "default": [] },
+        "headerText": { "type": "string", "default": "Downloads" },
         "headerLevel": { "type": "number", "default": 2 },
-        "layoutStyle": {
-            "type": "string",
-            "default": "row"
-        }
-    },
-    "supports": {
-        "html": false,
-        "anchor": true
+        "layoutStyle": { "type": "string", "default": "row" },
+        "showDownloadAll": { "type": "boolean", "default": false }
     },
     "editorScript": "file:./index.js",
     "editorStyle": "file:./index.css",
-    "style": "file:./style-index.css"
+    "style": "file:./style-index.css",
+    "render": "file:./render.php"
 }
