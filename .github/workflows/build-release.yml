@@ -56,7 +56,7 @@ jobs:
           cp README.md $PLUGIN_SLUG/
           
           # 4. ZIP the folder (The ZIP name has the version, the FOLDER inside does not)
-          zip -r ${PLUGIN_SLUG}-v${{ steps.get_version.outputs.VERSION }}.zip $PLUGIN_SLUG
+          zip -r ${PLUGIN_SLUG}.zip $PLUGIN_SLUG
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
