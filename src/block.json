@@ -1,0 +1,25 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mdb/media-download",
+    "version": "1.2.0",
+    "title": "Media Download",
+    "category": "media",
+    "icon": "download",
+    "description": "A clean file download block with custom labels.",
+    "attributes": {
+        "mediaID": { "type": "number" },
+        "mediaURL": { "type": "string" },
+        "mediaTitle": { "type": "string" },
+        "mediaSize": { "type": "string" },
+        "fileLabel": { "type": "string", "default": "FILE" },
+        "customName": { "type": "string", "default": "" }
+    },
+    "supports": {
+        "html": false,
+        "anchor": true
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css"
+}
