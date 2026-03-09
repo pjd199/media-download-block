@@ -1,0 +1,13 @@
+{
+  "name": "media-download-block",
+  "version": "0.0.1",
+  "description": "Wordpress Media Download Block",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^27.0.0"
+  }
+}
