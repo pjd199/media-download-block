@@ -70,7 +70,7 @@ export default function Edit({ attributes, setAttributes }) {
                 </PanelBody>
             </InspectorControls>
 
-            <div {...useBlockProps({ className: `mdb-editor-wrapper mdb-style-${layoutStyle}` })}>
+            <div {...useBlockProps({ className: `mdb-container mdb-style-${layoutStyle}` })}>
                 <TextControl
                     label={__('Block Header', 'mdb')}
                     value={headerText}
