@@ -1,7 +1,7 @@
 {
     "apiVersion": 3,
     "name": "mdb/media-download",
-    "version": "0.0.1",
+    "version": "1.3.0",
     "title": "Media Download",
     "category": "media",
     "icon": "download",
@@ -13,7 +13,7 @@
         "showDownloadAll": { "type": "boolean", "default": false }
     },
     "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
     "style": "file:./style-index.css",
-    "render": "file:../render.php",
-    "viewScript": "file:./view.js"
+    "render": "file:./render.php"
 }
