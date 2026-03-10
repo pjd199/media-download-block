@@ -58,11 +58,14 @@ jobs:
           # 4. ZIP the folder (The ZIP name has the version, the FOLDER inside does not)
           zip -r ${PLUGIN_SLUG}-v${{ steps.get_version.outputs.VERSION }}.zip $PLUGIN_SLUG
 
+          mkdir artifact
+          cp -r ${PLUGIN_SLUG} artifact
+
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.get_version.outputs.SLUG }}-v${{ steps.get_version.outputs.VERSION }}
-          path: ${{ steps.get_version.outputs.SLUG }}
+          path: artifact
           retention-days: 7
 
       - name: Create GitHub Release
