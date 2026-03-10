@@ -41,6 +41,16 @@
             opacity: 0.8;
         }
     }
+    
+    .mdb-download-all-wrapper {
+        display: flex;
+        justify-content: flex-start; // Align to left, or use 'center' if you prefer
+        padding-top: 10px;
+        
+        .mdb-download-all-btn {
+            margin-bottom: 0; // Reset existing margin if needed
+        }
+    }
 
     // --- List Wrapper ---
     .mdb-list-wrapper {
