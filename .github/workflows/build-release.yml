@@ -43,12 +43,20 @@ jobs:
 
       - name: Create Deployment Folder
         run: |
-          mkdir ${{ steps.get_version.outputs.SLUG }}
-          cp -r build ${{ steps.get_version.outputs.SLUG }}/
-          cp media-download-block.php ${{ steps.get_version.outputs.SLUG }}/
-          cp src/render.php ${{ steps.get_version.outputs.SLUG }}
-          cp README.md ${{ steps.get_version.outputs.SLUG }}/
-          zip -r ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION }}.zip ${{ steps.get_version.outputs.SLUG }}
+          # 1. Define a STATIC slug for the folder
+          PLUGIN_SLUG="media-download-block"
+          
+          # 2. Create the clean directory
+          mkdir $PLUGIN_SLUG
+          
+          # 3. Copy files into that specific folder
+          cp -r build $PLUGIN_SLUG/
+          cp media-download-block.php $PLUGIN_SLUG/
+          cp src/render.php $PLUGIN_SLUG/
+          cp README.md $PLUGIN_SLUG/
+          
+          # 4. ZIP the folder (The ZIP name has the version, the FOLDER inside does not)
+          zip -r ${PLUGIN_SLUG}-v${{ steps.get_version.outputs.VERSION }}.zip $PLUGIN_SLUG
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
