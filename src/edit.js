@@ -159,10 +159,11 @@ export default function Edit({ attributes, setAttributes }) {
             <div className="mdb-preview-container">
                 {files.length > 0 ? (
                     <div className={`mdb-container mdb-style-${layoutStyle}`}>
-                        <ServerSideRender
+                        <p>TEST!!!</p>
+                        <!--<ServerSideRender
                             block="mdb/media-download"
                             attributes={ attributes }
-                        />
+                        />-->
                     </div>
                 ) : (
                     <div style={{ 
