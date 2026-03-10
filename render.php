@@ -14,10 +14,6 @@ $show_download  = isset($attributes['showDownloadAll']) ? $attributes['showDownl
 // 2. Start the Buffer
 ob_start();
 
-$wrapper_attributes = get_block_wrapper_attributes([
-    'class' => "mdb-container mdb-style-$layout"
-]);
-
 // 3. Helper for SVG Icons (logic remains the same)
 if ( ! function_exists( 'mdb_get_file_icon' ) ) {
     function mdb_get_file_icon( $label ) {
@@ -29,18 +25,17 @@ if ( ! function_exists( 'mdb_get_file_icon' ) ) {
 ?>
 
 <div <?php echo $wrapper_attributes; ?>>
-    <?php if ( empty( $files ) ) : ?>
-        <div class="mdb-placeholder-preview">
-            <?php esc_html_e( 'No files selected. Add some in the sidebar!', 'mdb' ); ?>
-        </div>
-    <?php else : ?>
-
-        <?php if ( ! empty( $header_text ) ) : ?>
+    <?php if ( ! empty( $header_text ) ) : ?>
             <h<?php echo (int) $header_level; ?> class="mdb-front-header">
                 <?php echo esc_html( $header_text ); ?>
             </h<?php echo (int) $header_level; ?>>
-        <?php endif; ?>
+    <?php endif; ?>
 
+    <?php if ( empty( $files ) ) : ?>
+        <div class="mdb-placeholder-preview">
+            <?php esc_html_e( 'No files listed.', 'mdb' ); ?>
+        </div>
+    <?php else : ?>
         <div class="mdb-list-wrapper">
             <?php foreach ( $files as $file ) : ?>
                 <div class="mdb-download-row">
@@ -69,7 +64,6 @@ if ( ! function_exists( 'mdb_get_file_icon' ) ) {
                 </button>
             </div>
         <?php endif; ?>
-
     <?php endif; ?>
 </div>
 
