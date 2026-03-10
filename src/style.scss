@@ -1,36 +1,79 @@
+/**
+ * Media Download Block Styles
+ * Handles both Frontend and Editor (via ServerSideRender)
+ */
+
 .mdb-container {
-    margin: 20px 0;
+    margin: 1.5rem 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
-    // Header styling
+    // --- Header Styling ---
     .mdb-front-header {
-        margin-bottom: 20px;
-        color: #333;
+        margin-bottom: 1.5rem;
+        color: #1e1e1e;
+        line-height: 1.2;
     }
 
-    // Common Row/Card Styles
+    // --- Download All Button ---
+    .mdb-download-all-btn {
+        appearance: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #007cba;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 2rem;
+        transition: background 0.2s ease;
+
+        &:hover {
+            background-color: #006ba1;
+        }
+
+        &:disabled {
+            background-color: #a7aaad;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+    }
+
+    // --- List Wrapper ---
+    .mdb-list-wrapper {
+        width: 100%;
+    }
+
+    // --- Shared Item Styles ---
     .mdb-download-row {
         background: #ffffff;
         border: 1px solid #dcdcde;
         border-radius: 8px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        padding: 15px;
+        padding: 16px;
         display: flex;
         align-items: center;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
         &:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             border-color: #007cba;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
     }
 
     .mdb-file-icon {
         color: #007cba;
         flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         svg {
-            display: block;
             width: 32px;
             height: 32px;
+            display: block;
         }
     }
 
@@ -38,49 +81,56 @@
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        line-height: 1.4;
+        gap: 2px;
     }
 
     .mdb-download-title {
         font-weight: 600;
+        font-size: 16px;
         color: #1e1e1e;
-        word-break: break-all;
+        line-height: 1.4;
     }
 
     .mdb-download-size {
-        font-size: 0.85em;
+        font-size: 13px;
         color: #646970;
     }
 
     .mdb-clean-link {
         text-decoration: none;
-        background: #f0f0f1;
+        background-color: #f0f0f1;
         color: #3c434a;
-        padding: 6px 12px;
+        padding: 8px 16px;
         border-radius: 4px;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 500;
-        transition: all 0.2s;
+        transition: all 0.2s ease;
 
         &:hover {
-            background: #007cba;
-            color: #fff;
+            background-color: #007cba;
+            color: #ffffff;
+            text-decoration: none;
         }
     }
 
-    // --- ROW STYLE (Standard List) ---
+    // --- STYLE: ROW (Vertical List) ---
     &.mdb-style-row {
         .mdb-download-row {
             margin-bottom: 12px;
-            gap: 15px;
+            gap: 16px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
     }
 
-    // --- GRID STYLE (Compact Cards) ---
+    // --- STYLE: GRID (Compact Cards) ---
     &.mdb-style-grid {
         .mdb-list-wrapper {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            // Responsive grid: minimum 200px per card
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 16px;
         }
 
@@ -88,33 +138,35 @@
             flex-direction: column;
             text-align: center;
             gap: 12px;
-            
+
             .mdb-download-details {
-                margin: 5px 0;
+                margin-bottom: 8px;
             }
 
             .mdb-clean-link {
                 width: 100%;
+                text-align: center;
             }
         }
     }
+}
 
-    // Download All Button
-    .mdb-download-all-btn {
-        appearance: none;
-        background: #007cba;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-weight: 600;
-        cursor: pointer;
-        margin-bottom: 25px;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
+/** * Editor Specific Tweaks
+ * Ensures ServerSideRender components don't introduce unwanted spacing
+ */
+.wp-block-mdb-media-download {
+    width: 100%;
+    max-width: 100%;
 
-        &:hover { background: #006ba1; }
-        &:disabled { background: #a7aaad; cursor: wait; }
+    .components-server-side-render {
+        padding: 0;
+        margin: 0;
+    }
+    
+    // Ensures the placeholder looks nice when empty
+    .mdb-placeholder-preview {
+        background-color: #f0f0f1;
+        color: #757575;
+        font-style: italic;
     }
 }

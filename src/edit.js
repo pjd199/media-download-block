@@ -158,10 +158,14 @@ export default function Edit({ attributes, setAttributes }) {
             {/* PREVIEW AREA */}
             <div className="mdb-preview-container">
                 {files.length > 0 ? (
-                    <ServerSideRender 
-                        block="mdb/media-download" 
-                        attributes={attributes} 
-                    />
+                    <div { ...useBlockProps({ 
+                        className: `mdb-container mdb-style-${ layoutStyle }` 
+                    }) }>
+                        <ServerSideRender
+                            block="mdb/media-download"
+                            attributes={ attributes }
+                        />
+                    </div>
                 ) : (
                     <div style={{ 
                         padding: '50px 20px', 
