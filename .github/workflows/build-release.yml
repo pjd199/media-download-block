@@ -44,7 +44,7 @@ jobs:
       - name: Create Deployment Folder
         run: |
           # 1. Define a STATIC slug for the folder
-          PLUGIN_SLUG="media-download-block"
+          PLUGIN_SLUG=${{ steps.get_version.outputs.SLUG }}
           
           # 2. Create the clean directory
           mkdir $PLUGIN_SLUG
@@ -61,8 +61,8 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.get_version.outputs.SLUG }}
-          path: ${{ steps.get_version.outputs.SLUG }}/
+          name: ${{ steps.get_version.outputs.SLUG }}-v${{ steps.get_version.outputs.VERSION }}
+          path: ${{ steps.get_version.outputs.SLUG }}
           retention-days: 7
 
       - name: Create GitHub Release
