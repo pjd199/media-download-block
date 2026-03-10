@@ -1,4 +1,9 @@
 <?php
+return '<div class="mdb-placeholder-preview">' . 
+        esc_html__( 'HERE', 'mdb' ) . 
+        '</div>';
+
+
 /**
  * Render callback for the Media Download Block.
  * * IMPORTANT: Ensure there is NO whitespace before the opening <?php tag.
