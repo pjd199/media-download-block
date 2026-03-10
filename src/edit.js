@@ -19,9 +19,9 @@ import {
 export default function Edit({ attributes, setAttributes }) {
     const { 
         files = [], 
-        headerText = '', 
+        headerText = 'Downloads', 
         headerLevel = 2, 
-        layoutStyle = 'row', 
+        layoutStyle = 'grid', 
         showDownloadAll = false 
     } = attributes;
 
@@ -82,7 +82,7 @@ export default function Edit({ attributes, setAttributes }) {
                         />
                     </MediaUploadCheck>
 
-                    {files.length > 0 && (
+                    {files && files.length > 0 && (
                         <div className="mdb-sidebar-management">
                             {files.map((file, index) => (
                                 <div key={index} style={{ 
