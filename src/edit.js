@@ -42,15 +42,17 @@ export default function Edit({ attributes, setAttributes }) {
         <>
             <InspectorControls>
                 <PanelBody title={__('Display Settings', 'mdb')}>
-                    <SelectControl
-                        label={__('Display Style', 'mdb')}
-                        value={layoutStyle}
-                        options={[
-                            { label: __('Standard Row', 'mdb'), value: 'row' },
-                            { label: __('Compact List', 'mdb'), value: 'compact' },
-                        ]}
-                        onChange={(val) => setAttributes({ layoutStyle: val })}
-                    />
+                    <PanelBody title="Layout Settings">
+                        <SelectControl
+                            label="Display Style"
+                            value={ layoutStyle }
+                            options={[
+                                { label: 'List', value: 'list' },
+                                { label: 'Grid', value: 'grid' },
+                            ]}
+                            onChange={ ( value ) => setAttributes({ layoutStyle: value }) }
+                        />
+                    </PanelBody>
                     <SelectControl
                         label={__('Header Level', 'mdb')}
                         value={headerLevel}

@@ -1,26 +1,48 @@
+// Variables for consistency
+$primary-blue: #0073aa;
+$accent-yellow: #ffb900;
+$border-color: #e2e8f0;
+$transition: all 0.2s ease-in-out;
+
 .mdb-container {
+    margin: 1.5rem 0;
+    font-family: sans-serif;
+
+    .mdb-front-header {
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    // Shared List Wrapper logic
+    .mdb-list-wrapper {
+        display: grid;
+        gap: 12px; // Space between items
+    }
+
+    // Individual Row/Card Styles
     .mdb-download-row {
         display: flex;
         align-items: center;
-        padding: 12px 0;
-        border-bottom: 1px solid #eee;
-        gap: 15px;
+        padding: 12px 16px;
+        background: #fff;
+        border: 1px solid $border-color;
+        border-radius: 4px;
+        transition: $transition;
 
-        &:last-child { border-bottom: none; }
+        &:hover {
+            border-color: darken($border-color, 10%);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
 
         .mdb-file-icon {
             display: flex;
             align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            color: #007cba; // Use your primary theme color for icons
-            flex-shrink: 0;
-
+            margin-right: 16px;
+            color: $accent-yellow; // High-visibility yellow icon
+            
             svg {
-                width: 100%;
-                height: 100%;
-                display: block;
+                width: 32px;
+                height: 32px;
             }
         }
 
@@ -28,75 +50,108 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            
+
             .mdb-download-title {
-                font-weight: 500;
-                color: #1e1e1e;
-                font-size: 15px;
+                font-weight: 600;
+                color: #1a202c;
+                font-size: 1rem;
             }
 
             .mdb-download-size {
-                font-size: 12px;
-                color: #757575;
+                font-size: 0.85rem;
+                color: #718096;
             }
         }
 
         .mdb-clean-link {
-            color: #757575;
-            transition: color 0.2s ease;
-            display: flex;
-            align-items: center;
+            text-decoration: none;
+            background-color: $primary-blue; // Clear blue action button
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: $transition;
 
             &:hover {
-                color: #007cba;
+                background-color: darken($primary-blue, 10%);
             }
+        }
+    }
+
+    // --- Layout Variants ---
+
+    // 1. Row/List Layout
+    &.mdb-style-row {
+        .mdb-list-wrapper {
+            grid-template-columns: 1fr; // Single column vertical list
+        }
+    }
+
+    // 2. Grid Layout (Responsive)
+    &.mdb-style-grid {
+        .mdb-list-wrapper {
+            // Responsive logic: items will be at least 240px wide
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        }
+
+        .mdb-download-row {
+            flex-direction: column;
+            text-align: center;
+            padding: 24px 16px;
+
+            .mdb-file-icon {
+                margin-right: 0;
+                margin-bottom: 12px;
+                
+                svg {
+                    width: 48px;
+                    height: 48px;
+                }
+            }
+
+            .mdb-download-details {
+                margin-bottom: 16px;
+            }
+
+            .mdb-clean-link {
+                width: 100%;
+            }
+        }
+    }
+
+    // Download All Button
+    .mdb-download-all-btn {
+        margin-bottom: 1rem;
+        cursor: pointer;
+        background: #f8fafc;
+        border: 1px solid $border-color;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        
+        &:hover {
+            background: #edf2f7;
         }
     }
 }
 
-.mdb-file-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    color: #444; // Subtle professional grey
-    flex-shrink: 0;
+// Mobile Tweak: Force "Row" layout to stack on very small screens
+@media (max-width: 480px) {
+    .mdb-container.mdb-style-row .mdb-download-row {
+        flex-direction: column;
+        text-align: center;
 
-    svg {
-        width: 100%;
-        height: 100%;
+        .mdb-file-icon {
+            margin-right: 0;
+            margin-bottom: 8px;
+        }
+
+        .mdb-clean-link {
+            margin-top: 12px;
+            width: 100%;
+        }
     }
-}
-
-.mdb-clean-link {
-    background: transparent;
-    border: none;
-    padding: 8px;
-    border-radius: 50%;
-    color: #007cba;
-    transition: background 0.2s ease, transform 0.1s ease;
-
-    &:hover {
-        background: #f0f7ff;
-        color: #005a87;
-        transform: translateY(1px); // Subtle "click" feel
-    }
-}
-
-.mdb-download-all-btn {
-    display: inline-flex;
-    align-items: center;
-    background: #007cba;
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 4px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-bottom: 20px;
-    transition: background 0.2s;
-
-    &:hover { background: #006ba1; }
-    &:disabled { background: #ccc; cursor: not-allowed; }
 }
