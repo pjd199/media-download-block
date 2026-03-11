@@ -1,74 +1,43 @@
 import JSZip from 'jszip';
 
-const initDownloadAll = () => {
-    // Find all "Download All" buttons on the page
+document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.mdb-download-all-btn');
 
     buttons.forEach(button => {
-        // Prevent the script from attaching multiple times
-        if (button.dataset.initialized) return;
-        button.dataset.initialized = "true";
-
         button.addEventListener('click', async (e) => {
             e.preventDefault();
-
-            // 1. Get the files from the data attribute (updated by PHP/Gutenberg)
-            const filesData = button.getAttribute('data-files');
-            if (!filesData) return;
-
-            const files = JSON.parse(filesData);
-            const zipName = button.getAttribute('data-zipname') || 'downloads';
+            const files = JSON.parse(button.dataset.files);
+            const zipName = button.dataset.zipname || 'downloads';
             const zip = new JSZip();
             
-            // 2. UI Feedback
-            const originalText = button.innerHTML;
+            button.innerText = 'Preparing ZIP...';
             button.disabled = true;
-            button.innerText = 'Bundling Files...';
 
             try {
-                // 3. Fetch all files simultaneously
                 const promises = files.map(async (file) => {
                     const response = await fetch(file.url);
-                    if (!response.ok) throw new Error(`Could not fetch ${file.url}`);
-                    
                     const blob = await response.blob();
-                    
-                    // Use the custom Display Name from the sidebar, 
-                    // falling back to the real filename if empty
-                    const fileName = file.displayName ? 
-                        `${file.displayName.replace(/[/\\?%*:|"<>]/g, '-')}.${file.fileLabel}` : 
-                        file.realFileName;
-
-                    zip.file(fileName, blob);
+                    // Use the original filename or the display name
+                    const name = file.realFileName || `${file.displayName}.${file.fileLabel.toLowerCase()}`;
+                    zip.file(name, blob);
                 });
 
                 await Promise.all(promises);
-
-                // 4. Generate and trigger download
                 const content = await zip.generateAsync({ type: 'blob' });
+                
+                // Create temporary link to trigger download
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(content);
                 link.download = `${zipName}.zip`;
-                
-                document.body.appendChild(link);
                 link.click();
-                document.body.removeChild(link);
                 
-                button.innerHTML = originalText;
+                button.innerText = 'Download All (.zip)';
             } catch (error) {
-                console.error('ZIP generation failed:', error);
-                button.innerText = 'Error creating ZIP';
-                setTimeout(() => { button.innerHTML = originalText; }, 3000);
+                console.error('Zip failed', error);
+                button.innerText = 'Error Downloading';
             } finally {
                 button.disabled = false;
             }
         });
     });
-};
-
-// Initialize on page load
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initDownloadAll);
-} else {
-    initDownloadAll();
-}
+});
