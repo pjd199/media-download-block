@@ -42,7 +42,6 @@ export default function Edit({ attributes, setAttributes }) {
         <>
             <InspectorControls>
                 <PanelBody title={__('Display Settings', 'mdb')}>
-                    <PanelBody title="Layout Settings">
                         <SelectControl
                             label="Display Style"
                             value={ layoutStyle }
@@ -52,7 +51,6 @@ export default function Edit({ attributes, setAttributes }) {
                             ]}
                             onChange={ ( value ) => setAttributes({ layoutStyle: value }) }
                         />
-                    </PanelBody>
                     <SelectControl
                         label={__('Header Level', 'mdb')}
                         value={headerLevel}
