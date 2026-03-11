@@ -1,6 +1,6 @@
 {
   "name": "media-download-block",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A clean file download block for the Gutenberg editor.",
   "main": "build/index.js",
   "license": "GPL-2.0-or-later",

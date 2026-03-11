@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Media Download Block
  * Description: Block for downloading files from the Media Library
- * Version: 0.0.1
+ * Version: 0.0.2
  * Author: Pete Dibdin
  * GitHub Plugin URI: https://github.com/pjd199/media-download-block
  * License: MIT
