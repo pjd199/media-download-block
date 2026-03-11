@@ -1,102 +1,182 @@
+/**
+ * Media Download Block Styles
+ * Handles both Frontend and Editor (via ServerSideRender)
+ */
+
 .mdb-container {
+    margin: 1.5rem 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+    // --- Header Styling ---
+    .mdb-front-header {
+        margin-bottom: 1.5rem;
+        color: #1e1e1e;
+        line-height: 1.2;
+    }
+
+    // --- Download All Button ---
+    .mdb-download-all-btn {
+        appearance: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #007cba;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 2rem;
+        transition: background 0.2s ease;
+
+        &:hover {
+            background-color: #006ba1;
+        }
+
+        &:disabled {
+            background-color: #a7aaad;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+    }
+    
+    .mdb-download-all-wrapper {
+        display: flex;
+        justify-content: flex-start; // Align to left, or use 'center' if you prefer
+        padding-top: 10px;
+        
+        .mdb-download-all-btn {
+            margin-bottom: 0; // Reset existing margin if needed
+        }
+    }
+
+    // --- List Wrapper ---
+    .mdb-list-wrapper {
+        width: 100%;
+    }
+
+    // --- Shared Item Styles ---
     .mdb-download-row {
+        background: #ffffff;
+        border: 1px solid #dcdcde;
+        border-radius: 8px;
+        padding: 16px;
         display: flex;
         align-items: center;
-        padding: 12px 0;
-        border-bottom: 1px solid #eee;
-        gap: 15px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
-        &:last-child { border-bottom: none; }
+        &:hover {
+            border-color: #007cba;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+    }
 
-        .mdb-file-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    .mdb-file-icon {
+        color: #007cba;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
             width: 32px;
             height: 32px;
-            color: #007cba; // Use your primary theme color for icons
-            flex-shrink: 0;
+            display: block;
+        }
+    }
 
-            svg {
-                width: 100%;
-                height: 100%;
-                display: block;
+    .mdb-download-details {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .mdb-download-title {
+        font-weight: 600;
+        font-size: 16px;
+        color: #1e1e1e;
+        line-height: 1.4;
+    }
+
+    .mdb-download-size {
+        font-size: 13px;
+        color: #646970;
+    }
+
+    .mdb-clean-link {
+        text-decoration: none;
+        background-color: #f0f0f1;
+        color: #3c434a;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: #007cba;
+            color: #ffffff;
+            text-decoration: none;
+        }
+    }
+
+    // --- STYLE: ROW (Vertical List) ---
+    &.mdb-style-row {
+        .mdb-download-row {
+            margin-bottom: 12px;
+            gap: 16px;
+
+            &:last-child {
+                margin-bottom: 0;
             }
         }
+    }
 
-        .mdb-download-details {
-            flex-grow: 1;
-            display: flex;
+    // --- STYLE: GRID (Compact Cards) ---
+    &.mdb-style-grid {
+        .mdb-list-wrapper {
+            display: grid;
+            // Responsive grid: minimum 200px per card
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .mdb-download-row {
             flex-direction: column;
-            
-            .mdb-download-title {
-                font-weight: 500;
-                color: #1e1e1e;
-                font-size: 15px;
+            text-align: center;
+            gap: 12px;
+
+            .mdb-download-details {
+                margin-bottom: 8px;
             }
 
-            .mdb-download-size {
-                font-size: 12px;
-                color: #757575;
-            }
-        }
-
-        .mdb-clean-link {
-            color: #757575;
-            transition: color 0.2s ease;
-            display: flex;
-            align-items: center;
-
-            &:hover {
-                color: #007cba;
+            .mdb-clean-link {
+                width: 100%;
+                text-align: center;
             }
         }
     }
 }
 
-.mdb-file-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    color: #444; // Subtle professional grey
-    flex-shrink: 0;
+/** * Editor Specific Tweaks
+ * Ensures ServerSideRender components don't introduce unwanted spacing
+ */
+.wp-block-mdb-media-download {
+    width: 100%;
+    max-width: 100%;
 
-    svg {
-        width: 100%;
-        height: 100%;
+    .components-server-side-render {
+        padding: 0;
+        margin: 0;
     }
-}
-
-.mdb-clean-link {
-    background: transparent;
-    border: none;
-    padding: 8px;
-    border-radius: 50%;
-    color: #007cba;
-    transition: background 0.2s ease, transform 0.1s ease;
-
-    &:hover {
-        background: #f0f7ff;
-        color: #005a87;
-        transform: translateY(1px); // Subtle "click" feel
+    
+    // Ensures the placeholder looks nice when empty
+    .mdb-placeholder-preview {
+        background-color: #f0f0f1;
+        color: #757575;
+        font-style: italic;
     }
-}
-
-.mdb-download-all-btn {
-    display: inline-flex;
-    align-items: center;
-    background: #007cba;
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 4px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-bottom: 20px;
-    transition: background 0.2s;
-
-    &:hover { background: #006ba1; }
-    &:disabled { background: #ccc; cursor: not-allowed; }
 }

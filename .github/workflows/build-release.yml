@@ -61,7 +61,7 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION }}
+          name: ${{ steps.get_version.outputs.SLUG }}
           path: ${{ steps.get_version.outputs.SLUG }}/
           retention-days: 7
 
@@ -71,6 +71,6 @@ jobs:
         continue-on-error: true
         with:
           tag_name: v${{ steps.get_version.outputs.VERSION }}
-          files: ${{ steps.get_version.outputs.SLUG }}-${{ steps.get_version.outputs.VERSION }}.zip
+          files: ${{ steps.get_version.outputs.SLUG }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
