@@ -1,9 +1,7 @@
 <?php
 // Safety check: if no files, don't render anything
-$files = $attributes['files'] ?? [];
-if ( empty( $files ) || ! is_array( $files ) ) {
-    return '<div class="mdb-placeholder-preview">' . esc_html__( 'No files available for download.', 'mdb' ) . '</div>';
-}
+$files = isset($attributes['files']) ? $attributes['files'] : [];
+if (empty($files)) return '';
 
 // Helper for icons inside the same file to ensure it's defined
 if (!function_exists('mdb_get_icon')) {
@@ -70,6 +68,12 @@ $wrapper_attributes = get_block_wrapper_attributes([
         <h<?php echo (int)$header_level; ?> class="mdb-front-header"><?php echo esc_html($header_text); ?></h<?php echo (int)$header_level; ?>>
     <?php endif; ?>
 
+    <?php if ($show_all && count($files) > 1): ?>
+        <button class="mdb-download-all-btn" data-files='<?php echo json_encode($files); ?>' data-zipname="downloads">
+            Download All (.zip)
+        </button>
+    <?php endif; ?>
+
     <div class="mdb-list-wrapper">
         <?php foreach ($files as $file): ?>
             <div class="mdb-download-row">
@@ -82,9 +86,4 @@ $wrapper_attributes = get_block_wrapper_attributes([
             </div>
         <?php endforeach; ?>
     </div>
-    <?php if ($show_all && count($files) > 1): ?>
-        <button class="mdb-download-all-btn" data-files='<?php echo json_encode($files); ?>' data-zipname="downloads">
-            Download All (.zip)
-        </button>
-    <?php endif; ?>
 </div>

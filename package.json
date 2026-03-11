@@ -21,7 +21,6 @@
     "@wordpress/scripts": "^30.1.0"
   },
   "dependencies": {
-    "jszip": "^3.10.1",
-    "@wordpress/server-side-render": "^6.17.0"
+    "jszip": "^3.10.1"
   }
 }
